@@ -5,7 +5,8 @@ const showMenu = {
     name: "startOptions",
     choices: [
         "View All Departments",
-        "View All Roles"
+        "View All Roles",
+        "View All Employees"
     ]
 };
 

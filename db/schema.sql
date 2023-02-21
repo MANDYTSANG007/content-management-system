@@ -29,5 +29,6 @@ CREATE TABLE employees (
 );
 
 SHOW COLUMNS FROM departments;
-SHOW COLUMNS FROM exployees;
 SHOW COLUMNS FROM roles;
+SHOW COLUMNS FROM exployees;
+

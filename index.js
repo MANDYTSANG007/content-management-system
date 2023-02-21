@@ -3,7 +3,7 @@ import mysql from 'mysql2';
 import * as dotenv from 'dotenv' 
 dotenv.config()
 import questions from "./config/questions.js";
-import consoleTable from 'console.table';
+// import consoleTable from 'console.table';
 
 
 // Create a connection to the database
@@ -28,6 +28,15 @@ const init = () => {
                 var sql = `SELECT * FROM departments`;
                 viewTable(sql);
             } break;
+            case "View All Employees": {
+                var sql = `SELECT * FROM employees`;
+                viewTable(sql);
+            } break;
+            case "View All Roles": {
+                var sql = `SELECT * FROM roles`;
+                viewTable(sql);
+            } break;
+            
         }
     })
 }

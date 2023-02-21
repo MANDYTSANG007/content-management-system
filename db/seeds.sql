@@ -24,4 +24,5 @@ VALUES
     ("Albert", "Einstein", 1, null);
 
 SELECT * FROM departments;
-SELECT * FROM roles
+SELECT * FROM employees;
+SELECT * FROM roles;
