@@ -5,8 +5,10 @@ const showMenu = {
     name: "startOptions",
     choices: [
         "View All Departments",
+        "View All Employees",
         "View All Roles",
-        "View All Employees"
+        "Add a Department",
+        "Add an Employee"
     ]
 };
 
@@ -17,4 +19,40 @@ const continueYN = {
     choices: ["continue", "quit"],
 }
 
-export default {showMenu, continueYN};
+const addDepartment = [
+    {
+        type: "input",
+        message: "Department name: ",
+        name: "name",
+        default: "Marketing"
+    }
+];
+
+const addEmployee = [
+    {
+        type: "input",
+        message: "Employee first name: ",
+        name: "first_name",
+        default: "Tony"
+    },
+    {
+        type: "input",
+        message: "Employee last name: ",
+        name: "last_name",
+        default: "Stark"
+    },
+    {
+        type: "list",
+        message: "Role ID: ",
+        name: "role_id",
+        default: 3
+    },
+    {
+        type: "input",
+        message: "Employee manager ID: ",
+        name: "manager_id",
+        default: 1
+    }
+];
+
+export default { showMenu, continueYN, addDepartment, addEmployee };

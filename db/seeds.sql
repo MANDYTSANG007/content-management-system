@@ -26,3 +26,4 @@ VALUES
 SELECT * FROM departments;
 SELECT * FROM employees;
 SELECT * FROM roles;
+
