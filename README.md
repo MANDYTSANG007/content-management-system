@@ -5,11 +5,13 @@ Node.js
 Inquirer
 MySQL
 Console Table
+dotenv
 
 set up environment
 .gitignore
 .env
 
+import dependences using import as this is using ES6.
 set up system structure
 db
     schema.sql
@@ -17,6 +19,7 @@ db
 config
     questions
 index.js
+
 
 
 REFERENCE:

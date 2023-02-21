@@ -23,4 +23,5 @@ VALUES
     ("Natalie", "Rushman", 2, null),
     ("Albert", "Einstein", 1, null);
 
-    
+SELECT * FROM departments;
+SELECT * FROM roles

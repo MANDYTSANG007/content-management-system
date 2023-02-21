@@ -4,7 +4,8 @@
   "description": "install dependencies Node.js Inquirer MySQL Console Table",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +20,9 @@
   "homepage": "https://github.com/MANDYTSANG007/content-management-system#readme",
   "dependencies": {
     "console.table": "^0.10.0",
+    "dotenv": "^16.0.3",
     "inquirer": "^9.1.4",
     "mysql2": "^3.1.2"
-  }
+  },
+  "type":"module"
 }
