@@ -11,7 +11,8 @@ const showMenu = {
         "Add an Employee",
         "Add a Role",
         "Update an Employee",
-        "Delete a Department"
+        "Delete a Department",
+        "Exit"
     ]
 };
 
@@ -22,61 +23,11 @@ const continueYN = {
     choices: ["continue", "quit"],
 }
 
-const addDepartment = [
-    {
-        type: "input",
-        message: "Department name: ",
-        name: "name",
-        default: "Marketing"
-    }
-];
+const exitYN = {
+    type: "list",
+    message: "Would you like to exit?",
+    name: "exit",
+    choices: ["continue", "exit"],
+}
 
-const addEmployee = [
-    {
-        type: "input",
-        message: "Employee first name: ",
-        name: "first_name",
-        default: "Tony"
-    },
-    {
-        type: "input",
-        message: "Employee last name: ",
-        name: "last_name",
-        default: "Stark"
-    },
-    {
-        type: "list",
-        message: "Role ID: ",
-        name: "role_id",
-        default: 3
-    },
-    {
-        type: "input",
-        message: "Employee manager ID: ",
-        name: "manager_id",
-        default: 1
-    }
-];
-
-const addRole = [
-    {
-        type: "input",
-        message: "Job title: ",
-        name: "role",
-        default: "Marketing"
-    },
-    {
-        type: "input",
-        message: "Salary",
-        name: "salary",
-        default: 120000
-    },
-    {
-        type: "input",
-        message: "Department ID: ",
-        name: "department_id",
-        default: 2
-    }
-]
-
-export default { showMenu, continueYN, addDepartment, addEmployee, addRole };
+export default { showMenu, continueYN, exitYN };

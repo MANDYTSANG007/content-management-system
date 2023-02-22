@@ -1,26 +1,74 @@
 # content-management-system
-install dependencies
-npm init -y
-Node.js
-Inquirer
-MySQL
-Console Table
-dotenv
 
-set up environment
-.gitignore
-.env
+The Content Management System (CMS) is a command-line application I have built from scratch using Node.js, Inquirer, and MySQL. It is a tool to manage a company's employee database. The application allows the user to add, delete, and update employee records, as well as view and manage the departments, roles, and employees information in a company in a variety of ways.
 
-import dependences using import as this is using ES6.
-set up system structure
-db
-    schema.sql
-    seeds.sql
-config
-    questions
-index.js
+## Table of Contents
+
+- [Installation](#installation)
+- [Usage](#usage)
+- [Built with](#built-with)
+- [Development Process](#development-process)
+- [Future Development](#future-development)
+- [Author](#author)
+- [License](#license)
+
+## Installation
+
+1. Clone from the repository.
+2. Install Node.js and npm if you haven't already done so.
+3. Navigate to the project directory in your terminal and run `npm install` to install the required dependencies.
+4. Create .env file at root directory, change values as needed (for use with MySQL database):
+```
+DB_PASSWORD='your_password'
+DB_HOST='localhost'
+DB_USER='root'
+DB_NAME='cms_db'
+```
+
+## Usage
+
+1. Navigate to the db directory where the database seeding script is located.
+2. Run the following command to connect to the database using the command line:
+```
+mysql -u root -p
+```
+3. Enter your MySQL password when prompted.
+4. Once connected to the database, run the following command to execute the SQL script and seed the database with data:
+```
+source schema.sql
+source seeds.sql
+```
+5. Return to the root directory, open the terminal and run `npm start`.
 
 
+## Built With
 
-REFERENCE:
-MySQL Documentation: https://dev.mysql.com/doc/refman/8.0/en/
+* [Node.js](https://nodejs.org/en/)
+* [Inquirer](https://www.npmjs.com/package/inquirer)
+* [MySQL](https://www.npmjs.com/package/mysql2)
+* [DotEnv](https://www.npmjs.com/package/dotenv)
+* [Console-Table](https://www.npmjs.com/package/console.table)
+
+## Development Process
+
+The EER (Enhanced Entity Relationship) diagram below is the design of the diagram. It consists of three entities, with relationships between the roles and departments entities, and between the employees and roles entities as well as between the employees and itself.
+![EER Diagram](Assets/images/eer-diagram.png).
+
+In the schema, the ON DELETE CASCADE constraint is added to the relationship between the roles and departments entities, which ensures that if a department is deleted, all the roles associated with that department are also deleted.
+
+
+## Future Development
+
+* Confirmation on Update / Delete
+* Return to Previous Menu option
+* Delete roles and employees
+
+## Author
+
+Mandy Tsang is the author of this application. Find additional work on Mandy Tsang's [Github profile.](https://github.com/MANDYTSANG007).
+
+## License
+
+This project is licensed under the MIT Liense - see [MIT](https://opensource.org/licenses/MIT)
+
+

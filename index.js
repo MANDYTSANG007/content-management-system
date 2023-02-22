@@ -10,7 +10,8 @@ const con = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT
 });
 
 con.connect((err) => {
@@ -54,6 +55,9 @@ const init = () => {
             case "Delete a Department": {
                 deleteDepartment();
             } break;
+            case "Exit": {
+                exitYN();
+            } break;
         }
     })
 }
@@ -80,7 +84,16 @@ const continueQuestion = () => {
 
 // Add new department into the database.
 const addDepartment = () => {
-    inquirer.prompt(questions.addDepartment).then((answer) => {
+    inquirer.prompt(
+        [
+            {
+                type: "input",
+                message: "What is the department's name?",
+                name: "name",
+                default: "Marketing"
+            }
+        ]
+    ).then((answer) => {
         const sql = `INSERT INTO departments (department_name) VALUES (?)`;
         const department_name = [answer.name];
 
@@ -89,7 +102,7 @@ const addDepartment = () => {
                 console.log.json({ error: err.message });
                 init();
             }
-            console.log(`Added ${department_name} into the Departments database.`)
+            console.log(`${department_name} is added successfully.`)
             let sql = `SELECT * FROM departments`
             viewTable(sql);
         })
@@ -114,7 +127,7 @@ const addEmployee = () => {
             },
             {
                 type: "array",
-                message: "What is the employee's role?",
+                message: "What is the employee's role? Enter role ID number.",
                 name: "role",
                 xPrompt: {
                     type: "list",
@@ -132,10 +145,10 @@ const addEmployee = () => {
     ).then((answer) => {
         const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
         const newEmployee = [
-            answer.first_name1,
-            answer.last_name1,
+            answer.first_name,
+            answer.last_name,
             answer.role1,
-            answer.manager1.split(" ")[0]
+            answer.manager.split(" ")[0]
         ];
         con.query(sql, newEmployee, (err, result) => {
             //console.log("roleArray", roleArray)  // return roleArray ["1 - Engineer", "2 = Head of Security", ...]
@@ -150,7 +163,7 @@ const addEmployee = () => {
         })
     })
 };
-
+// Add new role into the database.
 const addRole = () => {
     inquirer.prompt(
         [
@@ -196,7 +209,7 @@ const addRole = () => {
         })
     })
 };
-
+// Update employee information
 const updateEmployee = () => {
     getRoleArray();
     inquirer.prompt(
@@ -296,5 +309,17 @@ const getDepartmentArray = () => {
 };
 getDepartmentArray();
 
+const exitYN = () => {
+    inquirer.prompt(questions.exitYN).then((answer) => {
+        if (answer.exit === "exit") {
+            console.log("Thank you for using CMS.")
+            process.exit();
+        } else {
+            init();
+        }
+    })
+}
+
 // Call the init function.
 init();
+
