@@ -3,8 +3,7 @@ import mysql from 'mysql2';
 import * as dotenv from 'dotenv'
 dotenv.config()
 import questions from "./config/questions.js";
-// import consoleTable from 'console.table';
-
+import consoleTable from 'console.table';
 
 // Create a connection to the database
 const con = mysql.createConnection({
@@ -49,6 +48,12 @@ const init = () => {
             case "Add a Role": {
                 addRole();
             } break;
+            case "Update an Employee": {
+                updateEmployee();
+            } break;
+            case "Delete a Department": {
+                deleteDepartment();
+            } break;
         }
     })
 }
@@ -82,7 +87,7 @@ const addDepartment = () => {
         con.query(sql, department_name, (err, result) => {
             if (err) {
                 console.log.json({ error: err.message });
-                return;
+                init();
             }
             console.log(`Added ${department_name} into the Departments database.`)
             let sql = `SELECT * FROM departments`
@@ -114,7 +119,7 @@ const addEmployee = () => {
                 xPrompt: {
                     type: "list",
                     multiselect: true,
-                    choices: roleArray
+                    choices: roleArray   //roleArray ["1 - Engineer", "2 = Head of Security", ...]       
                 }
             },
             {
@@ -127,23 +132,24 @@ const addEmployee = () => {
     ).then((answer) => {
         const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
         const newEmployee = [
-            answer.first_name,
-            answer.last_name,
-            answer.role,
-            answer.manager.split(" ")[0]
+            answer.first_name1,
+            answer.last_name1,
+            answer.role1,
+            answer.manager1.split(" ")[0]
         ];
-        // console.log(newEmployee);
         con.query(sql, newEmployee, (err, result) => {
+            //console.log("roleArray", roleArray)  // return roleArray ["1 - Engineer", "2 = Head of Security", ...]
+            // console.log("departmentArray", departmentArray) // return departmentArray ["1 - Engineering", "2 - Security", ...]
             if (err) {
                 console.log({ error: err.message });
-                return;
+                init();
             }
             console.log(`New employee is added into the Employees database`)
             let sql = `SELECT * FROM employees`;
             viewTable(sql);
         })
     })
-}
+};
 
 const addRole = () => {
     inquirer.prompt(
@@ -180,16 +186,81 @@ const addRole = () => {
             answer.department.split(" ")[0]
         ]
         con.query(sql, newRole, (err, result) => {
-            if(err) {
-                console.log({ error: err.message});
-                return;
+            if (err) {
+                console.log({ error: err.message });
+                init();
             }
             console.log(`The new role has been added into the Roles database`)
             let sql = `SELECT * FROM roles`;
             viewTable(sql);
         })
     })
-}
+};
+
+const updateEmployee = () => {
+    getRoleArray();
+    inquirer.prompt(
+        [
+            {
+                type: "list",
+                message: "Which employee would you like to update?",
+                name: "fullName",
+                choices: employeeArray
+            },
+            {
+                type: "list",
+                message: "What is the employee's new job title?",
+                name: "title",
+                choices: roleArray
+            }
+        ]
+    ).then((answer) => {
+        var employee_id = answer.fullName.split(" ")[0];
+        var role_id = answer.title.split(" ")[0];
+        const sql = `UPDATE employees SET role_id = ? WHERE id = ?`;
+        const update = [role_id, employee_id];
+        con.query(sql, update, (err, result) => {
+            if (err) {
+                console.log({ error: err.message });
+                init();
+            }
+            console.log(`Employee's role has been updated.`)
+            let sql = `SELECT * FROM employees`;
+            viewTable(sql);
+        })
+    })
+};
+
+// Department has a relationship with roles and employees, needs to update all tables to refect the change
+const deleteDepartment = () => {
+    inquirer.prompt(
+        [
+            {
+                type: "array",
+                message: "Department: ",
+                name: "selectedDept",
+                xPrompt: {
+                    type: "list",
+                    multiselect: true,
+                    choices: departmentArray
+                }
+            }
+        ]
+    ).then((answer) => {
+        console.log("departmentArray", departmentArray) // return departmentArray ["1 - Engineering", "2 - Security", ...]
+        const selectedDepartment = answer.selectedDept;
+        const sql = `DELETE FROM departments WHERE departments.id = ${selectedDepartment}`;
+        con.query(sql, selectedDepartment, (err, result) => {
+            if (err) {
+                console.log({ error: err.message });
+                init();
+            }
+            console.log(`Department ${selectedDepartment} has been deleted.`)
+            let sql = `SELECT * FROM departments`;
+            viewTable(sql);
+        })
+    })
+};
 
 // This will resolve the ListPrompt error as the output is provided ` " + name + "` parameter.
 const getEmployeeArray = () => {

@@ -9,7 +9,9 @@ const showMenu = {
         "View All Roles",
         "Add a Department",
         "Add an Employee",
-        "Add a Role"
+        "Add a Role",
+        "Update an Employee",
+        "Delete a Department"
     ]
 };
 
