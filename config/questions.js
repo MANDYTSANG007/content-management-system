@@ -8,7 +8,8 @@ const showMenu = {
         "View All Employees",
         "View All Roles",
         "Add a Department",
-        "Add an Employee"
+        "Add an Employee",
+        "Add a Role"
     ]
 };
 
@@ -55,4 +56,25 @@ const addEmployee = [
     }
 ];
 
-export default { showMenu, continueYN, addDepartment, addEmployee };
+const addRole = [
+    {
+        type: "input",
+        message: "Job title: ",
+        name: "role",
+        default: "Marketing"
+    },
+    {
+        type: "input",
+        message: "Salary",
+        name: "salary",
+        default: 120000
+    },
+    {
+        type: "input",
+        message: "Department ID: ",
+        name: "department_id",
+        default: 2
+    }
+]
+
+export default { showMenu, continueYN, addDepartment, addEmployee, addRole };

@@ -21,6 +21,7 @@ con.connect((err) => {
 
 let employeeArray;
 let roleArray;
+let departmentArray;
 
 // Start showMenu page.
 const init = () => {
@@ -44,6 +45,9 @@ const init = () => {
             } break;
             case "Add an Employee": {
                 addEmployee();
+            } break;
+            case "Add a Role": {
+                addRole();
             } break;
         }
     })
@@ -141,6 +145,52 @@ const addEmployee = () => {
     })
 }
 
+const addRole = () => {
+    inquirer.prompt(
+        [
+            {
+                type: "input",
+                message: "What is the title? ",
+                name: "title",
+                default: "Marketing"
+            },
+            {
+                type: "input",
+                message: "What is the salary? ",
+                name: "salary",
+                default: 120000
+            },
+            {
+                type: "array",
+                message: "Department: ",
+                name: "department",
+                xPrompt: {
+                    type: "list",
+                    multiselect: true,
+                    choices: departmentArray
+                }
+            }
+        ]
+    ).then((answer) => {
+        console.log(answer);
+        const sql = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`;
+        const newRole = [
+            answer.title,
+            answer.salary,
+            answer.department.split(" ")[0]
+        ]
+        con.query(sql, newRole, (err, result) => {
+            if(err) {
+                console.log({ error: err.message});
+                return;
+            }
+            console.log(`The new role has been added into the Roles database`)
+            let sql = `SELECT * FROM roles`;
+            viewTable(sql);
+        })
+    })
+}
+
 // This will resolve the ListPrompt error as the output is provided ` " + name + "` parameter.
 const getEmployeeArray = () => {
     employeeArray = [];
@@ -153,7 +203,27 @@ const getEmployeeArray = () => {
 }
 getEmployeeArray();
 
+const getRoleArray = () => {
+    roleArray = [];
+    con.query(`SELECT id, title FROM roles`, function (err, results) {
+        results.forEach(role => {
+            let title = role.id + " - " + role.title;
+            roleArray.push(title);
+        })
+    })
+};
+getRoleArray();
 
+const getDepartmentArray = () => {
+    departmentArray = [];
+    con.query(`SELECT id, department_name FROM departments`, (err, results) => {
+        results.forEach(department => {
+            let newDepartment = department.id + " - " + department.department_name;
+            departmentArray.push(newDepartment);
+        })
+    })
+};
+getDepartmentArray();
 
 // Call the init function.
 init();
