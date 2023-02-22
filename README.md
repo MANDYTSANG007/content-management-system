@@ -1,4 +1,7 @@
 # content-management-system
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 
 The Content Management System (CMS) is a command-line application I have built from scratch using Node.js, Inquirer, and MySQL. It is a tool to manage a company's employee database. The application allows the user to add, delete, and update employee records, as well as view and manage the departments, roles, and employees information in a company in a variety of ways.
 
@@ -70,5 +73,7 @@ Mandy Tsang is the author of this application. Find additional work on Mandy Tsa
 ## License
 
 This project is licensed under the MIT Liense - see [MIT](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 
 
