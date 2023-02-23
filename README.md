@@ -72,7 +72,7 @@ Mandy Tsang is the author of this application. Find additional work on Mandy Tsa
 
 ## License
 
-This project is licensed under the MIT Liense - see [MIT](https://opensource.org/licenses/MIT)
+This project is licensed under the MIT License - see [MIT](https://opensource.org/licenses/MIT)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 

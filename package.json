@@ -21,8 +21,9 @@
   "dependencies": {
     "console.table": "^0.10.0",
     "dotenv": "^16.0.3",
+    "figlet": "^1.5.2",
     "inquirer": "^9.1.4",
     "mysql2": "^3.1.2"
   },
-  "type":"module"
+  "type": "module"
 }

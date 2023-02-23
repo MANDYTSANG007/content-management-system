@@ -6,17 +6,19 @@ import questions from "./config/questions.js";
 import consoleTable from 'console.table';
 
 // Create a connection to the database
-const con = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT
-});
+const con = mysql.createConnection(
+    {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT
+    },
+    console.log(`Connected to the cms_db database.`)
+);
 
 con.connect((err) => {
     if (err) throw err;
-    console.log("Connected to the cms_db database!");
 });
 
 let employeeArray;
@@ -33,11 +35,21 @@ const init = () => {
                 viewTable(sql);
             } break;
             case "View All Employees": {
-                var sql = `SELECT * FROM employees`;
+                var sql =
+                    `SELECT employees.id, employees.first_name, employees.last_name, title, salary, department_name, CONCAT(manager.first_name, 
+                        ' ', manager.last_name) AS manager
+                    FROM employees
+                    LEFT JOIN roles ON role_id = roles.id
+                    LEFT JOIN departments ON department_id = departments.id
+                    LEFT JOIN employees AS manager ON employees.manager_id = manager.id`
+                    ;
                 viewTable(sql);
             } break;
             case "View All Roles": {
-                var sql = `SELECT * FROM roles`;
+                var sql =
+                    `SELECT roles.id, title, salary, department_name
+                    FROM roles
+                    LEFT JOIN departments ON department_id = departments.id`;
                 viewTable(sql);
             } break;
             case "Add a Department": {
@@ -132,7 +144,7 @@ const addEmployee = () => {
                 xPrompt: {
                     type: "list",
                     multiselect: true,
-                    choices: roleArray   //roleArray ["1 - Engineer", "2 = Head of Security", ...]       
+                    choices: roleArray
                 }
             },
             {
@@ -147,18 +159,22 @@ const addEmployee = () => {
         const newEmployee = [
             answer.first_name,
             answer.last_name,
-            answer.role1,
+            answer.role.split(" ")[0],
             answer.manager.split(" ")[0]
         ];
         con.query(sql, newEmployee, (err, result) => {
-            //console.log("roleArray", roleArray)  // return roleArray ["1 - Engineer", "2 = Head of Security", ...]
-            // console.log("departmentArray", departmentArray) // return departmentArray ["1 - Engineering", "2 - Security", ...]
             if (err) {
                 console.log({ error: err.message });
                 init();
             }
             console.log(`New employee is added into the Employees database`)
-            let sql = `SELECT * FROM employees`;
+            let sql = 
+                `SELECT employees.id, employees.first_name, employees.last_name, title, salary, department_name, CONCAT(manager.first_name, 
+                ' ', manager.last_name) AS manager
+                FROM employees
+                LEFT JOIN roles ON role_id = roles.id
+                LEFT JOIN departments ON department_id = departments.id
+                LEFT JOIN employees AS manager ON employees.manager_id = manager.id`;
             viewTable(sql);
         })
     })
@@ -204,7 +220,10 @@ const addRole = () => {
                 init();
             }
             console.log(`The new role has been added into the Roles database`)
-            let sql = `SELECT * FROM roles`;
+            let sql =
+                `SELECT roles.id, title, salary, department_name
+                FROM roles
+                LEFT JOIN departments ON department_id = departments.id`;
             viewTable(sql);
         })
     })
@@ -260,7 +279,7 @@ const deleteDepartment = () => {
             }
         ]
     ).then((answer) => {
-        console.log("departmentArray", departmentArray) // return departmentArray ["1 - Engineering", "2 - Security", ...]
+        console.log("departmentArray", departmentArray)
         const selectedDepartment = answer.selectedDept;
         const sql = `DELETE FROM departments WHERE departments.id = ${selectedDepartment}`;
         con.query(sql, selectedDepartment, (err, result) => {
