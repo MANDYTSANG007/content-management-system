@@ -57,14 +57,18 @@ source seeds.sql
 The EER (Enhanced Entity Relationship) diagram below is the design of the diagram. It consists of three entities, with relationships between the roles and departments entities, and between the employees and roles entities as well as between the employees and itself.
 ![EER Diagram](Assets/images/eer-diagram.png).
 
-In the schema, the ON DELETE CASCADE constraint is added to the relationship between the roles and departments entities, which ensures that if a department is deleted, all the roles associated with that department are also deleted.
+In the schema, the ON DELETE CASCADE constraint is added to the relationship between the roles and departments entities, which ensures that if a department is deleted, all the roles associated with that department are also deleted. Please note that this CMS program is for demo purpose only, the use of ON DELETE CASCADE should be used carefully as it will automatically delete related rows in child tables when a row in the parent table is deleted. 
 
+Here are some screenshot demonstrations:
+<img src="Assets/images/2023-cms-overview-screenshot.png">
+<img src="Assets/images/2023-cms-add-employee-screenshot.png">
 
 ## Future Development
 
 * Confirmation on Update / Delete
 * Return to Previous Menu option
 * Delete roles and employees
+* Create ON DELETE CASCADE alternative
 
 ## Author
 

@@ -14,7 +14,8 @@ const con = mysql.createConnection(
         database: process.env.DB_NAME,
         port: process.env.DB_PORT
     },
-    console.log(`Connected to the cms_db database.`)
+    console.log(`You are now connected to the cms_db database.`),
+    console.log(`Created by Mandy Tsang.`)
 );
 
 con.connect((err) => {
