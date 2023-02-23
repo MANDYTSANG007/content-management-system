@@ -7,20 +7,20 @@ VALUES
 
 INSERT INTO roles (title, salary, department_id)
 VALUES
-    ("Engineer", 120000, 1),
-    ("Head of Security", 150000, 2),
+    ("Engineer", 200000, 1),
+    ("Head of Security", 199999, 2),
     ("Scientist", 200000, 3),
     ("Intern", 80000, 3),
     ("CEO", 10000, 4);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
-    ("TONY", "STARK", 4, null),
-    ("Peter", "Parker", 3, null),
-    ("Happy", "Hogan", 2, null),
+    ("Tony", "Stark", 5, null),
+    ("Pepper", "Potts", 5, null),
+    ("Peter", "Parker", 4, 1),
+    ("Happy", "Hogan", 2, 1),
     ("Bruce", "Banner", 3, null),
-    ("Pepper", "Potts", 4, null),
-    ("Natalie", "Rushman", 2, null),
+    ("Natalie", "Rushman", 2, 2),
     ("Albert", "Einstein", 1, null);
 
 SELECT * FROM departments;
